@@ -2,69 +2,91 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Desafio do Lorenzo</title>
-  <style>
-    body { font-family: 'Comic Sans MS', sans-serif; text-align: center; background: #cfefff; margin: 0; padding: 20px; }
-    h1 { color: #2b2b2b; }
-    .question { font-size: 20px; margin: 20px 0; }
-    .options button { margin: 10px; padding: 10px 20px; font-size: 16px; }
-    .score { font-size: 18px; margin-top: 20px; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Desafio do Lorenzo – Caçador de Saberes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dff1ff;
+            text-align: center;
+            padding: 20px;
+        }
+        .question {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .answers button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+        .score {
+            font-size: 20px;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Desafio do Lorenzo – Caçador de Saberes</h1>
-  <div id="game">
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
+    <h1>Desafio do Lorenzo – Caçador de Saberes</h1>
+    <div class="question" id="question">Carregando pergunta...</div>
+    <div class="answers" id="answers"></div>
     <div class="score" id="score">Pontuação: 0</div>
-  </div>
-  <script>
-    const perguntas = [
-      { pergunta: "Quem são os griôs?", opcoes: ["Poetas africanos", "Líderes religiosos", "Educadores, poetas e músicos"], correta: 2 },
-      { pergunta: "O que é tradição oral?", opcoes: ["Ensino por livros", "Transmissão de saberes por histórias faladas", "Rituais religiosos"], correta: 1 },
-      { pergunta: "Qual era o material usado na escrita cuneiforme?", opcoes: ["Papiro", "Argila fresca", "Papel"], correta: 1 },
-      { pergunta: "O que os escribas faziam?", opcoes: ["Cantavam", "Escreviam e registravam informações", "Cultivavam alimentos"], correta: 1 },
-      { pergunta: "Qual povo criou a escrita cuneiforme?", opcoes: ["Egípcios", "Sumérios", "Gregos"], correta: 1 },
-      { pergunta: "Qual era o papel dos monges copistas?", opcoes: ["Desenhavam mapas", "Copiavam e traduziam livros", "Cantavam cânticos"], correta: 1 },
-      { pergunta: "Quem inventou a imprensa?", opcoes: ["Einstein", "Galileu", "Gutenberg"], correta: 2 },
-      { pergunta: "Com o que era feito o papiro?", opcoes: ["Madeira", "Pele de carneiro", "Caule de planta"], correta: 2 },
-      { pergunta: "Qual o objetivo da escrita?", opcoes: ["Decorar", "Registrar e comunicar ideias", "Fazer arte"], correta: 1 },
-      { pergunta: "O que acontece ao chegar a 30 pontos?", opcoes: ["Perde o jogo", "Começa de novo", "Vence o jogo"], correta: 2 }
-    ];
 
-    let pontos = 0;
-    let atual = 0;
+    <script>
+        let score = 0;
+        let currentQuestion = 0;
+        let questions = [];
 
-    function mostrarPergunta() {
-      if (pontos >= 30) {
-        document.getElementById("game").innerHTML = "<h2>🎉 Parabéns, Lorenzo! Você venceu o desafio! 🎉</h2>";
-        new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_53c2e2a3d4.mp3").play();
-        return;
-      }
-      const q = perguntas[atual];
-      document.getElementById("question").innerText = q.pergunta;
-      const opcoes = q.opcoes.map((op, i) => `<button onclick="responder(${i})">${op}</button>`).join("");
-      document.getElementById("options").innerHTML = opcoes;
-    }
+        async function loadQuestions() {
+            const res = await fetch("fase1_perguntas.json");
+            questions = await res.json();
+            showQuestion();
+        }
 
-    function responder(i) {
-      const correta = perguntas[atual].correta;
-      if (i === correta) {
-        pontos++;
-        new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_bf4b6d7cd7.mp3").play();
-      } else {
-        pontos -= 2;
-        new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_f83b130667.mp3").play();
-      }
-      document.getElementById("score").innerText = "Pontuação: " + pontos;
-      atual = (atual + 1) % perguntas.length;
-      setTimeout(mostrarPergunta, 1000);
-    }
+        function showQuestion() {
+            if (currentQuestion >= questions.length || score >= 30) {
+                document.getElementById("question").textContent = "🏆 Parabéns! Você venceu!";
+                document.getElementById("answers").innerHTML = "";
+                playSound("vitoria");
+                return;
+            }
 
-    mostrarPergunta();
-  </script>
+            const q = questions[currentQuestion];
+            document.getElementById("question").textContent = q.pergunta;
+            const answersDiv = document.getElementById("answers");
+            answersDiv.innerHTML = "";
+            q.alternativas.forEach((alt, index) => {
+                const btn = document.createElement("button");
+                btn.textContent = alt;
+                btn.onclick = () => checkAnswer(index === q.correta);
+                answersDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(isCorrect) {
+            if (isCorrect) {
+                score++;
+                playSound("acerto");
+            } else {
+                score -= 2;
+                playSound("erro");
+            }
+            document.getElementById("score").textContent = "Pontuação: " + score;
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function playSound(tipo) {
+            const sounds = {
+                acerto: "acerto.mp3",
+                erro: "erro.mp3",
+                vitoria: "vitoria.mp3"
+            };
+            const audio = new Audio(sounds[tipo]);
+            audio.play();
+        }
+
+        loadQuestions();
+    </script>
 </body>
 </html>
-    
