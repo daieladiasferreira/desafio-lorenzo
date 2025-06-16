@@ -7,12 +7,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Desafio do Lorenzo – Caçador de Saberes</h1>
-  <div id="quiz-container">
+  <!-- Tela Inicial -->
+  <div id="tela-inicial">
+    <img src="capa_lorenzo.png" alt="Capa do jogo" class="capa-img">
+    <button id="botao-jogar">Jogar</button>
+  </div>
+
+  <!-- Quiz -->
+  <div id="quiz-container" style="display: none;">
+    <h1>Desafio do Lorenzo – Caçador de Saberes</h1>
     <div id="pergunta"></div>
     <div id="opcoes"></div>
     <p id="pontuacao">Pontuação: 0</p>
   </div>
+
   <script src="script.js" defer></script>
 </body>
 </html>
