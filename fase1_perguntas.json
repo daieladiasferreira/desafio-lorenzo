@@ -1,0 +1,92 @@
+[
+  {
+    "question": "O que é tradição oral?",
+    "options": [
+      "História contada por livros",
+      "História passada de geração em geração por fala",
+      "Escrita em papiros"
+    ],
+    "answer": "História passada de geração em geração por fala"
+  },
+  {
+    "question": "Quem são os griôs?",
+    "options": [
+      "Poetas africanos",
+      "Líderes religiosos",
+      "Educadores, poetas e músicos"
+    ],
+    "answer": "Educadores, poetas e músicos"
+  },
+  {
+    "question": "Para que servia a tradição oral entre os povos indígenas?",
+    "options": [
+      "Registrar leis",
+      "Manter viva a cultura",
+      "Comandar batalhas"
+    ],
+    "answer": "Manter viva a cultura"
+  },
+  {
+    "question": "Onde surgiu a escrita cuneiforme?",
+    "options": [
+      "Egito",
+      "Roma",
+      "Mesopotâmia"
+    ],
+    "answer": "Mesopotâmia"
+  },
+  {
+    "question": "Qual material os escribas usavam para escrever no Egito Antigo?",
+    "options": [
+      "Papel",
+      "Papiro",
+      "Argila"
+    ],
+    "answer": "Papiro"
+  },
+  {
+    "question": "O que são hieróglifos?",
+    "options": [
+      "Símbolos usados na escrita egípcia",
+      "Letras gregas",
+      "Desenhos modernos"
+    ],
+    "answer": "Símbolos usados na escrita egípcia"
+  },
+  {
+    "question": "Quem inventou a prensa tipográfica?",
+    "options": [
+      "Albert Einstein",
+      "Johannes Gutenberg",
+      "Galileu Galilei"
+    ],
+    "answer": "Johannes Gutenberg"
+  },
+  {
+    "question": "O que permitiu a prensa de Gutenberg?",
+    "options": [
+      "Copiar livros com rapidez",
+      "Desenhar melhor",
+      "Criar mapas antigos"
+    ],
+    "answer": "Copiar livros com rapidez"
+  },
+  {
+    "question": "Como era feita a escrita cuneiforme?",
+    "options": [
+      "Com penas e tinta",
+      "Com cunhas em argila",
+      "Com pincéis e papiro"
+    ],
+    "answer": "Com cunhas em argila"
+  },
+  {
+    "question": "Qual foi o primeiro livro impresso por Gutenberg?",
+    "options": [
+      "A Bíblia",
+      "Os Lusíadas",
+      "Dom Quixote"
+    ],
+    "answer": "A Bíblia"
+  }
+]
