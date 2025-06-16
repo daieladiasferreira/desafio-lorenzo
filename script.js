@@ -1,105 +1,63 @@
-
+ let pontuacao = 0;
+let perguntaAtual = 0;
 let perguntas = [];
-let indiceAtual = 0;
-let pontuacao = 0;
-let faseAtual = 1;
 
-const perguntaEl = document.getElementById("pergunta");
-const opcoesEl = document.getElementById("opcoes");
-const pontuacaoEl = document.getElementById("pontuacao");
-
-// Sons
-const somAcerto = new Audio("acerto.mp3");
-const somErro = new Audio("erro.mp3");
-const somVitoria = new Audio("vitoria.mp3");
-
-const falaAcerto = new Audio("fala_acerto.mp3");
-const falaErro = new Audio("fala_erro.mp3");
-const falaVitoria = new Audio("fala_vitoria.mp3");
-
-// Animação
-function animarElemento(elemento) {
-  elemento.classList.remove("animar");
-  void elemento.offsetWidth;
-  elemento.classList.add("animar");
+function iniciarJogo() {
+  document.getElementById('tela-inicial').style.display = 'none';
+  document.getElementById('quiz-container').style.display = 'block';
+  carregarPerguntas('fase1_perguntas.json');
 }
 
-function carregarPergunta() {
-  const atual = perguntas[indiceAtual];
-  perguntaEl.textContent = atual.pergunta;
-  opcoesEl.innerHTML = "";
+function carregarPerguntas(arquivo) {
+  fetch(arquivo)
+    .then(response => response.json())
+    .then(data => {
+      perguntas = data;
+      perguntaAtual = 0;
+      pontuacao = 0;
+      document.getElementById('pontuacao').textContent = `Pontuação: ${pontuacao}`;
+      mostrarPergunta();
+    });
+}
 
-  atual.opcoes.forEach((opcao, index) => {
-    const botao = document.createElement("button");
+function mostrarPergunta() {
+  const pergunta = perguntas[perguntaAtual];
+  document.getElementById('pergunta').textContent = pergunta.pergunta;
+
+  const opcoesDiv = document.getElementById('opcoes');
+  opcoesDiv.innerHTML = '';
+
+  pergunta.opcoes.forEach((opcao, index) => {
+    const botao = document.createElement('button');
     botao.textContent = opcao;
-    botao.classList.add("botao-opcao");
     botao.onclick = () => verificarResposta(index);
-    opcoesEl.appendChild(botao);
+    opcoesDiv.appendChild(botao);
   });
-
-  animarElemento(perguntaEl);
 }
 
-function verificarResposta(escolhida) {
-  const correta = perguntas[indiceAtual].correta;
-  if (escolhida === correta) {
-    pontuacao += 1;
-    somAcerto.play();
-    falaAcerto.play();
+function verificarResposta(indiceEscolhido) {
+  const respostaCorreta = perguntas[perguntaAtual].resposta;
+  const audio = new Audio();
+
+  if (indiceEscolhido === respostaCorreta) {
+    pontuacao++;
+    audio.src = 'fala_acerto.mp3';
   } else {
     pontuacao -= 2;
-    somErro.play();
-    falaErro.play();
+    audio.src = 'fala_erro.mp3';
   }
 
-  pontuacaoEl.textContent = `Pontuação: ${pontuacao}`;
-  animarElemento(pontuacaoEl);
+  audio.play();
+  document.getElementById('pontuacao').textContent = `Pontuação: ${pontuacao}`;
+  perguntaAtual++;
 
-  indiceAtual++;
-
-  if (indiceAtual < perguntas.length) {
-    setTimeout(carregarPergunta, 800);
+  if (perguntaAtual < perguntas.length) {
+    setTimeout(mostrarPergunta, 1000);
+  } else if (pontuacao >= 30) {
+    const parabens = new Audio('fala_vitoria.mp3');
+    parabens.play();
+    setTimeout(() => carregarPerguntas('fase2_perguntas.json'), 2000);
   } else {
-    if (faseAtual === 1) {
-      faseAtual = 2;
-      indiceAtual = 0;
-      carregarFase2();
-    } else {
-      perguntaEl.textContent = "🎉 Fim do jogo! Parabéns!";
-      opcoesEl.innerHTML = "";
-      somVitoria.play();
-      falaVitoria.play();
-    }
+    setTimeout(() => alert("Fim da fase! Que tal tentar de novo?"), 1000);
   }
 }
-
-function carregarFase1() {
-  fetch("fase1_perguntas.json")
-    .then((res) => res.json())
-    .then((dados) => {
-      perguntas = dados;
-      carregarPergunta();
-    })
-    .catch((erro) => {
-      perguntaEl.textContent = "Erro ao carregar perguntas da Fase 1.";
-      console.error("Erro:", erro);
-    });
-}
-
-function carregarFase2() {
-  fetch("fase2_perguntas.json")
-    .then((res) => res.json())
-    .then((dados) => {
-      perguntas = dados;
-      perguntaEl.textContent = "🌟 Fase 2 iniciando...";
-      opcoesEl.innerHTML = "";
-      setTimeout(carregarPergunta, 1000);
-    })
-    .catch((erro) => {
-      perguntaEl.textContent = "Erro ao carregar perguntas da Fase 2.";
-      console.error("Erro:", erro);
-    });
-}
-
-// Inicia o jogo na Fase 1
-carregarFase1();
