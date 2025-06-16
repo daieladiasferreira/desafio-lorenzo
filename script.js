@@ -1,0 +1,1 @@
+// JavaScript com novas animações e transições
