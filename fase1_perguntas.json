@@ -1,17 +1,102 @@
  [
   {
-    "pergunta": "Qual é a principal forma de transmissão de conhecimento entre os povos indígenas?",
-    "opcoes": ["Tradição oral", "Livros", "Internet", "Escrita pictográfica"],
+    "pergunta": "O que é tradição oral?",
+    "opcoes": [
+      "Contar histórias por meio da fala",
+      "Escrever em papiros antigos",
+      "Registrar tudo em computadores",
+      "Desenhar símbolos em paredes"
+    ],
     "correta": 0
   },
   {
-    "pergunta": "O que marca o início da História, segundo os estudiosos?",
-    "opcoes": ["O surgimento da agricultura", "O nascimento de Jesus", "A invenção da escrita", "As pinturas rupestres"],
+    "pergunta": "Quem utilizava a tradição oral para preservar suas histórias?",
+    "opcoes": [
+      "Somente europeus",
+      "Apenas reis e rainhas",
+      "Povos indígenas e africanos",
+      "Robôs e máquinas antigas"
+    ],
     "correta": 2
   },
   {
-    "pergunta": "Qual civilização é famosa por desenvolver a escrita cuneiforme?",
-    "opcoes": ["Egípcia", "Mesopotâmica", "Grega", "Chinesa"],
+    "pergunta": "A tradição oral era passada de geração para geração por meio de:",
+    "opcoes": [
+      "Livros antigos",
+      "Histórias contadas em voz alta",
+      "Mensagens de texto",
+      "Pinturas modernas"
+    ],
     "correta": 1
+  },
+  {
+    "pergunta": "O que surgiu depois da tradição oral para registrar a história?",
+    "opcoes": [
+      "A televisão",
+      "A escrita",
+      "O celular",
+      "A internet"
+    ],
+    "correta": 1
+  },
+  {
+    "pergunta": "Como eram os primeiros registros escritos?",
+    "opcoes": [
+      "Com emojis",
+      "Em blocos de notas",
+      "Em pedras, argila e papiros",
+      "Digitados no computador"
+    ],
+    "correta": 2
+  },
+  {
+    "pergunta": "A escrita foi importante porque:",
+    "opcoes": [
+      "Era bonita de ver",
+      "Registrava eventos, leis e histórias",
+      "Substituía a fala totalmente",
+      "Virou desenho animado"
+    ],
+    "correta": 1
+  },
+  {
+    "pergunta": "Qual povo é conhecido por ter desenvolvido a escrita cuneiforme?",
+    "opcoes": [
+      "Romanos",
+      "Gregos",
+      "Sumérios",
+      "Egípcios"
+    ],
+    "correta": 2
+  },
+  {
+    "pergunta": "O alfabeto que usamos hoje tem origem em:",
+    "opcoes": [
+      "Hieróglifos egípcios",
+      "Sinais de fumaça",
+      "Desenhos rupestres",
+      "Antigos alfabetos fenícios"
+    ],
+    "correta": 3
+  },
+  {
+    "pergunta": "A tradição oral ainda existe?",
+    "opcoes": [
+      "Não, é coisa do passado",
+      "Sim, ainda é usada em muitas culturas",
+      "Só é usada em festas",
+      "Só serve para crianças"
+    ],
+    "correta": 1
+  },
+  {
+    "pergunta": "Histórias contadas pela tradição oral costumam ensinar:",
+    "opcoes": [
+      "Como fazer memes",
+      "Como usar a internet",
+      "Lições de vida, cultura e valores",
+      "Receitas de bolos modernos"
+    ],
+    "correta": 2
   }
 ]
