@@ -1,63 +1,86 @@
- let pontuacao = 0;
-let perguntaAtual = 0;
-let perguntas = [];
+ let perguntas = [];
+let indiceAtual = 0;
+let pontuacao = 0;
 
-function iniciarJogo() {
-  document.getElementById('tela-inicial').style.display = 'none';
-  document.getElementById('quiz-container').style.display = 'block';
-  carregarPerguntas('fase1_perguntas.json');
+const perguntaEl = document.getElementById("pergunta");
+const opcoesEl = document.getElementById("opcoes");
+const pontuacaoEl = document.getElementById("pontuacao");
+const quizContainer = document.getElementById("quiz-container");
+const telaInicial = document.getElementById("tela-inicial");
+
+// Sons
+const somAcerto = new Audio("acerto_bling.mp3");
+const somErro = new Audio("erro_ops.mp3");
+const somVitoria = new Audio("vitoria_parabens.mp3");
+
+const falaAcerto = new Audio("fala_acerto.mp3");
+const falaErro = new Audio("fala_erro.mp3");
+const falaVitoria = new Audio("fala_vitoria.mp3");
+
+// Animação rápida
+function animarElemento(elemento) {
+  elemento.classList.remove("animar");
+  void elemento.offsetWidth;
+  elemento.classList.add("animar");
 }
 
-function carregarPerguntas(arquivo) {
-  fetch(arquivo)
-    .then(response => response.json())
-    .then(data => {
-      perguntas = data;
-      perguntaAtual = 0;
-      pontuacao = 0;
-      document.getElementById('pontuacao').textContent = `Pontuação: ${pontuacao}`;
-      mostrarPergunta();
-    });
-}
+function carregarPergunta() {
+  const atual = perguntas[indiceAtual];
+  perguntaEl.textContent = atual.pergunta;
+  opcoesEl.innerHTML = "";
 
-function mostrarPergunta() {
-  const pergunta = perguntas[perguntaAtual];
-  document.getElementById('pergunta').textContent = pergunta.pergunta;
-
-  const opcoesDiv = document.getElementById('opcoes');
-  opcoesDiv.innerHTML = '';
-
-  pergunta.opcoes.forEach((opcao, index) => {
-    const botao = document.createElement('button');
+  atual.opcoes.forEach((opcao, index) => {
+    const botao = document.createElement("button");
     botao.textContent = opcao;
+    botao.classList.add("botao-opcao");
     botao.onclick = () => verificarResposta(index);
-    opcoesDiv.appendChild(botao);
+    opcoesEl.appendChild(botao);
   });
+
+  animarElemento(perguntaEl);
 }
 
-function verificarResposta(indiceEscolhido) {
-  const respostaCorreta = perguntas[perguntaAtual].resposta;
-  const audio = new Audio();
-
-  if (indiceEscolhido === respostaCorreta) {
-    pontuacao++;
-    audio.src = 'fala_acerto.mp3';
+function verificarResposta(escolhida) {
+  const correta = perguntas[indiceAtual].correta;
+  if (escolhida === correta) {
+    pontuacao += 1;
+    somAcerto.play();
+    falaAcerto.play();
   } else {
     pontuacao -= 2;
-    audio.src = 'fala_erro.mp3';
+    somErro.play();
+    falaErro.play();
   }
 
-  audio.play();
-  document.getElementById('pontuacao').textContent = `Pontuação: ${pontuacao}`;
-  perguntaAtual++;
+  pontuacaoEl.textContent = `Pontuação: ${pontuacao}`;
+  animarElemento(pontuacaoEl);
 
-  if (perguntaAtual < perguntas.length) {
-    setTimeout(mostrarPergunta, 1000);
-  } else if (pontuacao >= 30) {
-    const parabens = new Audio('fala_vitoria.mp3');
-    parabens.play();
-    setTimeout(() => carregarPerguntas('fase2_perguntas.json'), 2000);
+  indiceAtual++;
+
+  if (indiceAtual < perguntas.length) {
+    setTimeout(carregarPergunta, 800);
   } else {
-    setTimeout(() => alert("Fim da fase! Que tal tentar de novo?"), 1000);
+    perguntaEl.textContent = "🏆 Fim da Fase 1!";
+    opcoesEl.innerHTML = "";
+    somVitoria.play();
+    falaVitoria.play();
   }
 }
+
+// 🔄 Essa função será chamada ao clicar no botão "Jogar"
+function iniciarJogo() {
+  telaInicial.style.display = "none";
+  quizContainer.style.display = "block";
+  carregarPergunta();
+}
+
+// 🔽 Carregar perguntas da fase 1
+fetch("fase1_perguntas.json")
+  .then((res) => res.json())
+  .then((dados) => {
+    perguntas = dados;
+  })
+  .catch((erro) => {
+    perguntaEl.textContent = "Erro ao carregar perguntas.";
+    console.error("Erro:", erro);
+  });
