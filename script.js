@@ -1,77 +1,47 @@
-let perguntas = [];
-let indiceAtual = 0;
-let pontuacao = 0;
-
-const perguntaEl = document.getElementById("pergunta");
-const opcoesEl = document.getElementById("opcoes");
-const pontuacaoEl = document.getElementById("pontuacao");
-
-// Sons
-const somAcerto = new Audio("acerto_bling.mp3");
-const somErro = new Audio("erro_ops.mp3");
-const somVitoria = new Audio("vitoria_parabens.mp3");
-
-const falaAcerto = new Audio("fala_acerto.mp3");
-const falaErro = new Audio("fala_erro.mp3");
-const falaVitoria = new Audio("fala_vitoria.mp3");
-
-// Animação rápida
-function animarElemento(elemento) {
-  elemento.classList.remove("animar");
-  void elemento.offsetWidth;
-  elemento.classList.add("animar");
+body {
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8ff;
 }
 
-function carregarPergunta() {
-  const atual = perguntas[indiceAtual];
-  perguntaEl.textContent = atual.pergunta;
-  opcoesEl.innerHTML = "";
-
-  atual.opcoes.forEach((opcao, index) => {
-    const botao = document.createElement("button");
-    botao.textContent = opcao;
-    botao.classList.add("botao-opcao");
-    botao.onclick = () => verificarResposta(index);
-    opcoesEl.appendChild(botao);
-  });
-
-  animarElemento(perguntaEl);
+.capa-img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  margin-top: 20px;
 }
 
-function verificarResposta(escolhida) {
-  const correta = perguntas[indiceAtual].correta;
-  if (escolhida === correta) {
-    pontuacao += 1;
-    somAcerto.play();
-    falaAcerto.play();
-  } else {
-    pontuacao -= 2;
-    somErro.play();
-    falaErro.play();
-  }
-
-  pontuacaoEl.textContent = `Pontuação: ${pontuacao}`;
-  animarElemento(pontuacaoEl);
-
-  indiceAtual++;
-
-  if (indiceAtual < perguntas.length) {
-    setTimeout(carregarPergunta, 800);
-  } else {
-    perguntaEl.textContent = "🏆 Fim da Fase 1!";
-    opcoesEl.innerHTML = "";
-    somVitoria.play();
-    falaVitoria.play();
-  }
+#botao-jogar {
+  font-size: 24px;
+  padding: 12px 24px;
+  margin-top: 20px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-fetch("fase1_perguntas.json")
-  .then((res) => res.json())
-  .then((dados) => {
-    perguntas = dados;
-    carregarPergunta();
-  })
-  .catch((erro) => {
-    perguntaEl.textContent = "Erro ao carregar perguntas.";
-    console.error("Erro:", erro);
-  });
+#botao-jogar:hover {
+  background-color: #005fa3;
+}
+
+#quiz-container {
+  padding: 20px;
+}
+
+.botao-opcao {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #e0f0ff;
+  border: 1px solid #0077cc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.botao-opcao:hover {
+  background-color: #cbe7ff;
+}
