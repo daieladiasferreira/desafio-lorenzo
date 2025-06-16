@@ -6,87 +6,92 @@
     <title>Desafio do Lorenzo – Caçador de Saberes</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #dff1ff;
+            font-family: 'Arial', sans-serif;
+            background: url('https://i.imgur.com/t3IBAwP.jpg') no-repeat center center fixed;
+            background-size: cover;
             text-align: center;
-            padding: 20px;
+            padding: 40px;
+            color: #333;
         }
-        .question {
-            font-size: 24px;
-            margin: 20px 0;
+        h1 {
+            font-size: 32px;
+            color: #2c3e50;
         }
-        .answers button {
-            margin: 5px;
-            padding: 10px 20px;
-            font-size: 18px;
+        button {
+            padding: 12px 20px;
+            margin: 10px;
+            font-size: 16px;
+            background-color: #f0f8ff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .score {
-            font-size: 20px;
-            margin-top: 30px;
+        button:hover {
+            background-color: #d6eaf8;
         }
     </style>
 </head>
 <body>
     <h1>Desafio do Lorenzo – Caçador de Saberes</h1>
-    <div class="question" id="question">Carregando pergunta...</div>
-    <div class="answers" id="answers"></div>
-    <div class="score" id="score">Pontuação: 0</div>
+    <div id="quiz">
+        <p id="pergunta">Carregando pergunta...</p>
+        <div id="opcoes"></div>
+        <p>Pontuação: <span id="pontuacao">0</span></p>
+    </div>
+    <audio id="som-acerto" src="acerto_bling.mp3"></audio>
+    <audio id="som-erro" src="erro_ops.mp3"></audio>
+    <audio id="som-vitoria" src="vitoria_parabens.mp3"></audio>
 
     <script>
-        let score = 0;
-        let currentQuestion = 0;
-        let questions = [];
+        let perguntas = [];
+        let perguntaAtual = 0;
+        let pontuacao = 0;
 
-        async function loadQuestions() {
-            const res = await fetch("fase1_perguntas.json");
-            questions = await res.json();
-            showQuestion();
+        async function carregarPerguntas() {
+            const res = await fetch('fase1_perguntas.json');
+            perguntas = await res.json();
+            mostrarPergunta();
         }
 
-        function showQuestion() {
-            if (currentQuestion >= questions.length || score >= 30) {
-                document.getElementById("question").textContent = "🏆 Parabéns! Você venceu!";
-                document.getElementById("answers").innerHTML = "";
-                playSound("vitoria");
+        function mostrarPergunta() {
+            if (pontuacao >= 30) {
+                document.getElementById("quiz").innerHTML = "<h2>Parabéns! Você venceu! 🏆</h2>";
+                document.getElementById("som-vitoria").play();
                 return;
             }
 
-            const q = questions[currentQuestion];
-            document.getElementById("question").textContent = q.pergunta;
-            const answersDiv = document.getElementById("answers");
-            answersDiv.innerHTML = "";
-            q.alternativas.forEach((alt, index) => {
-                const btn = document.createElement("button");
-                btn.textContent = alt;
-                btn.onclick = () => checkAnswer(index === q.correta);
-                answersDiv.appendChild(btn);
+            if (perguntaAtual >= perguntas.length) {
+                perguntaAtual = 0; // reiniciar
+            }
+
+            const pergunta = perguntas[perguntaAtual];
+            document.getElementById("pergunta").textContent = pergunta.pergunta;
+            const opcoesDiv = document.getElementById("opcoes");
+            opcoesDiv.innerHTML = "";
+
+            pergunta.opcoes.forEach((opcao, index) => {
+                const botao = document.createElement("button");
+                botao.textContent = opcao;
+                botao.onclick = () => verificarResposta(index, pergunta.correta);
+                opcoesDiv.appendChild(botao);
             });
         }
 
-        function checkAnswer(isCorrect) {
-            if (isCorrect) {
-                score++;
-                playSound("acerto");
+        function verificarResposta(indiceEscolhido, indiceCorreto) {
+            if (indiceEscolhido === indiceCorreto) {
+                pontuacao += 1;
+                document.getElementById("som-acerto").play();
             } else {
-                score -= 2;
-                playSound("erro");
+                pontuacao -= 2;
+                document.getElementById("som-erro").play();
             }
-            document.getElementById("score").textContent = "Pontuação: " + score;
-            currentQuestion++;
-            showQuestion();
+            document.getElementById("pontuacao").textContent = pontuacao;
+            perguntaAtual++;
+            setTimeout(mostrarPergunta, 1000);
         }
 
-        function playSound(tipo) {
-            const sounds = {
-                acerto: "acerto.mp3",
-                erro: "erro.mp3",
-                vitoria: "vitoria.mp3"
-            };
-            const audio = new Audio(sounds[tipo]);
-            audio.play();
-        }
-
-        loadQuestions();
+        carregarPerguntas();
     </script>
 </body>
 </html>
