@@ -1,93 +1,52 @@
-let perguntas = [];
-let indiceAtual = 0;
-let pontuacao = 0;
-
-// Elementos da tela
-const telaInicial = document.getElementById("tela-inicial");
-const quizContainer = document.getElementById("quiz-container");
-const perguntaEl = document.getElementById("pergunta");
-const opcoesEl = document.getElementById("opcoes");
-const pontuacaoEl = document.getElementById("pontuacao");
-
-// Sons
-const somAcerto = new Audio("acerto.mp3");
-const somErro = new Audio("erro.mp3");
-const somVitoria = new Audio("vitoria.mp3");
-
-// Falas do Lorenzo
-const falaAcerto = new Audio("fala_acerto.mp3");
-const falaErro = new Audio("fala_erro.mp3");
-const falaVitoria = new Audio("fala_vitoria.mp3");
-
-// Animação visual
-function animarElemento(elemento) {
-  elemento.classList.remove("animar");
-  void elemento.offsetWidth;
-  elemento.classList.add("animar");
-}
-
-// Carrega a pergunta atual
-function carregarPergunta() {
-  const atual = perguntas[indiceAtual];
-  perguntaEl.textContent = atual.pergunta;
-  opcoesEl.innerHTML = "";
-
-  atual.opcoes.forEach((opcao, index) => {
-    const botao = document.createElement("button");
-    botao.textContent = opcao;
-    botao.classList.add("botao-opcao");
-    botao.onclick = () => verificarResposta(index);
-    opcoesEl.appendChild(botao);
-  });
-
-  animarElemento(perguntaEl);
-}
-
-// Verifica se a resposta está correta
-function verificarResposta(escolhida) {
-  const correta = perguntas[indiceAtual].correta;
-  if (escolhida === correta) {
-    pontuacao += 1;
-    somAcerto.play();
-    falaAcerto.play();
-  } else {
-    pontuacao -= 2;
-    somErro.play();
-    falaErro.play();
+[
+  {
+    "pergunta": "O que é tradição oral?",
+    "opcoes": ["Escrita antiga", "Leitura de papiros", "Transmissão de histórias e saberes pela fala", "Uso da internet"],
+    "correta": 2
+  },
+  {
+    "pergunta": "Quem eram os griôs e o que eles faziam?",
+    "opcoes": ["Construtores africanos", "Guerreiros indígenas", "Sábios que contavam histórias e guardavam a cultura", "Médicos antigos"],
+    "correta": 2
+  },
+  {
+    "pergunta": "Qual era a função da música e da dança nas culturas indígenas e africanas?",
+    "opcoes": ["Só diversão", "Trabalho agrícola", "Expressar sentimentos, contar histórias e celebrar rituais", "Guerra"],
+    "correta": 2
+  },
+  {
+    "pergunta": "A escrita surgiu primeiro em qual região do mundo?",
+    "opcoes": ["Brasil", "Mesopotâmia", "Grécia", "Egito"],
+    "correta": 1
+  },
+  {
+    "pergunta": "O que é escrita cuneiforme?",
+    "opcoes": ["Desenhos em paredes", "Escrita com símbolos triangulares em tábuas de argila", "Textos bíblicos", "Escrita usada na Idade Média"],
+    "correta": 1
+  },
+  {
+    "pergunta": "O que era usado para escrever na Mesopotâmia?",
+    "opcoes": ["Papiro", "Tinta e papel", "Argila e estilete", "Tecido"],
+    "correta": 2
+  },
+  {
+    "pergunta": "Que povo usava a escrita hieroglífica?",
+    "opcoes": ["Gregos", "Romanos", "Egípcios", "Hebreus"],
+    "correta": 2
+  },
+  {
+    "pergunta": "O que é um papiro?",
+    "opcoes": ["Uma pedra antiga", "Uma árvore", "Um tipo de papel feito de planta usado para escrever", "Instrumento musical"],
+    "correta": 2
+  },
+  {
+    "pergunta": "Quem eram os escribas no Egito?",
+    "opcoes": ["Soldados", "Construtores de pirâmides", "Pessoas treinadas para ler e escrever", "Exploradores"],
+    "correta": 2
+  },
+  {
+    "pergunta": "O que os monges copistas faziam?",
+    "opcoes": ["Rezavam somente", "Copiavam livros à mão em mosteiros", "Desenhavam pirâmides", "Escreviam em papiros"],
+    "correta": 1
   }
-
-  pontuacaoEl.textContent = `Pontuação: ${pontuacao}`;
-  animarElemento(pontuacaoEl);
-
-  indiceAtual++;
-
-  if (indiceAtual < perguntas.length) {
-    setTimeout(carregarPergunta, 800);
-  } else {
-    perguntaEl.textContent = "🏆 Fim da Fase 1!";
-    opcoesEl.innerHTML = "";
-    somVitoria.play();
-    falaVitoria.play();
-  }
-}
-
-// Função que inicia o jogo
-function iniciarJogo() {
-  telaInicial.style.display = "none";
-  quizContainer.style.display = "block";
-  carregarPergunta();
-}
-
-// Carregar perguntas do arquivo JSON
-fetch("fase1_perguntas.json")
-  .then((res) => res.json())
-  .then((dados) => {
-    perguntas = dados;
-  })
-  .catch((erro) => {
-    perguntaEl.textContent = "Erro ao carregar perguntas.";
-    console.error("Erro:", erro);
-  });
-
-// Conectar botão "Jogar"
-document.getElementById("botao-jogar").addEventListener("click", iniciarJogo);
+]
