@@ -1,0 +1,102 @@
+[
+  {
+    "pergunta": "O que são fontes históricas?",
+    "opcoes": [
+      "Fontes de energia elétrica",
+      "Documentos, objetos ou registros usados para entender o passado",
+      "Locais de nascentes de rios",
+      "Livros de ficção científica"
+    ],
+    "correta": 1
+  },
+  {
+    "pergunta": "Qual foi o primeiro material usado para escrever na história?",
+    "opcoes": [
+      "Papel",
+      "Tela digital",
+      "Argila",
+      "Metal"
+    ],
+    "correta": 2
+  },
+  {
+    "pergunta": "O que é tradição oral?",
+    "opcoes": [
+      "Histórias contadas de geração em geração",
+      "Documentos antigos",
+      "Livros escolares",
+      "Desenhos nas cavernas"
+    ],
+    "correta": 0
+  },
+  {
+    "pergunta": "Qual povo usava muito a tradição oral para preservar suas histórias?",
+    "opcoes": [
+      "Egípcios",
+      "Romanos",
+      "Indígenas e africanos",
+      "Vikings"
+    ],
+    "correta": 2
+  },
+  {
+    "pergunta": "O que os griôs faziam nas culturas africanas?",
+    "opcoes": [
+      "Vendiam alimentos",
+      "Guardavam e contavam histórias e conhecimentos",
+      "Construíam casas",
+      "Faziam mapas"
+    ],
+    "correta": 1
+  },
+  {
+    "pergunta": "O que os indígenas brasileiros usavam para contar suas histórias?",
+    "opcoes": [
+      "Apenas livros",
+      "Televisão",
+      "Tradição oral e desenhos",
+      "Computadores"
+    ],
+    "correta": 2
+  },
+  {
+    "pergunta": "A escrita cuneiforme surgiu em qual povo?",
+    "opcoes": [
+      "Romanos",
+      "Sumérios",
+      "Maias",
+      "Gregos"
+    ],
+    "correta": 1
+  },
+  {
+    "pergunta": "Por que a tradição oral era importante antes da escrita?",
+    "opcoes": [
+      "Porque era mais divertida",
+      "Porque não existia escola",
+      "Porque era a única forma de passar conhecimento",
+      "Porque ninguém gostava de ler"
+    ],
+    "correta": 2
+  },
+  {
+    "pergunta": "Quais são exemplos de fontes históricas orais?",
+    "opcoes": [
+      "Entrevistas, lendas e relatos de pessoas mais velhas",
+      "Apenas pinturas antigas",
+      "Escritos em pergaminhos",
+      "Filmes de ficção"
+    ],
+    "correta": 0
+  },
+  {
+    "pergunta": "Qual dessas opções representa uma fonte escrita?",
+    "opcoes": [
+      "Canto tradicional",
+      "Vídeo no celular",
+      "Diário antigo",
+      "Pintura corporal"
+    ],
+    "correta": 2
+  }
+]
